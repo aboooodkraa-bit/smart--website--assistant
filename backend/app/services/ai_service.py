@@ -11,19 +11,22 @@ class AIService:
 {knowledge_context}
 إذا لم تجد الإجابة، اطلب من المستخدم التواصل مع المسؤول. أجب بنفس لغة المستخدم (عربي أو فرنسي)."""
         
-        if self.provider == "openai" and self.api_key:
+        if self.provider == "groq" and self.api_key:
             from openai import AsyncOpenAI
-            client = AsyncOpenAI(api_key=self.api_key, base_url=settings.OPENAI_BASE_URL)
+            client = AsyncOpenAI(
+                api_key=self.api_key, 
+                base_url="https://api.groq.com/openai/v1" 
+            )
             try:
                 response = await client.chat.completions.create(
-                    model=settings.OPENAI_MODEL,
+                    model="llama-3.3-70b-versatile",
                     messages=[{"role": "system", "content": system_prompt}] + messages,
                     max_tokens=settings.AI_MAX_TOKENS,
                     timeout=settings.AI_TIMEOUT_SECONDS
                 )
                 return response.choices[0].message.content
             except Exception as e:
-                return f"عذراً، حدث خطأ في الاتصال بالذكاء الاصطناعي. (الخطأ: {str(e)})"
+                return f"عذراً، حدث خطأ في الاتصال بالذكاء الاصطناعي. (تفاصيل: {str(e)})"
         
-        # الوضع الوهمي (Mock) في حال عدم وجود مفتاح API
-        return "مرحباً! أنا مساعد ذكي تجريبي. (لم يتم تفعيل الذكاء الاصطناعي الحقيقي بعد). يمكنك التواصل مع المسؤول."
+        # في حال عدم وجود مزود
+        return "مرحباً! أنا مساعد ذكي. (يرجى التحقق من إعدادات الذكاء الاصطناعي)."
