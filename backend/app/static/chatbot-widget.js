@@ -1,6 +1,6 @@
 (function() {
     // 1. إعدادات البوت
-    const API_URL = "http://127.0.0.1:8000";
+    const API_URL = "https://smart-website-assistant.onrender.com";
     
     // 2. إنشاء حاوية الـ Widget (Shadow DOM)
     const host = document.createElement('div');
