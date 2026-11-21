@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 120
     DATABASE_URL: str = "sqlite+aiosqlite:///./data/app.db"
     ALLOWED_ORIGINS: str = "http://127.0.0.1:5500,http://localhost:5500"
-    AI_PROVIDER: Literal["mock", "openai"] = "mock"
+    AI_PROVIDER: Literal["mock", "openai", "groq"] = "mock"
     OPENAI_API_KEY: str = ""
     OPENAI_MODEL: str = "gpt-4o-mini"
     OPENAI_BASE_URL: str = "https://api.openai.com/v1"
